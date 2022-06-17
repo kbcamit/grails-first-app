@@ -8,9 +8,23 @@ class UserService {
 
     def save(GrailsParameterMap params) {
         User user = new User(params)
+        user.username = params.email
         def response = AppUtil.saveResponse(false, user)
         if (user.validate()) {
             user.save(flush: true)
+            def role = Role.findByAuthority('ROLE_USER')
+            if(role) {
+                UserRole.create(user, role)
+
+                UserRole.withSession {
+                    it.flush()
+                    it.clear()
+                }
+
+                response.isSuccess = true
+            } else {
+                response.isSuccess = false
+            }
             if (!user.hasErrors()) {
                 response.isSuccess = true
             }
@@ -55,5 +69,11 @@ class UserService {
             return false
         }
         return true
+    }
+
+    def createUserRole(User user, Role adminRole) {
+        if( !user.authorities.contains(adminRole) ) {
+            UserRole.create(user, adminRole, true)
+        }
     }
 }

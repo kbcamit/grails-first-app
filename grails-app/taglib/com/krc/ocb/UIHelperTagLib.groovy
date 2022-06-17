@@ -1,14 +1,17 @@
 package com.krc.ocb
 
+import grails.plugin.springsecurity.SpringSecurityService
+import grails.plugin.springsecurity.SpringSecurityUtils
+
 class UIHelperTagLib {
 
     static namespace = "UIHelper"
 
-    AuthenticationService authenticationService
+    SpringSecurityService springSecurityService
 
     def userName = { attr, body ->
         {
-            out << "<span>${authenticationService.getUserName()}</span>"
+            out << "<span>${springSecurityService.getCurrentUser().firstName}</span>"
         }
     }
 
@@ -17,7 +20,7 @@ class UIHelperTagLib {
                 [controller: "contact", action: "index", name: "Contacts"],
         ]
 
-        if(authenticationService.isAdministratorMember()){
+        if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
             navigations.add([controller: "user", action: "index", name: "Users"])
         }
 

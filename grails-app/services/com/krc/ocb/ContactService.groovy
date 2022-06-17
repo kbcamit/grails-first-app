@@ -1,16 +1,17 @@
 package com.krc.ocb
 
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.servlet.mvc.GrailsParameterMap
 
 @Transactional
 class ContactService {
 
-    AuthenticationService authenticationService
+    SpringSecurityService springSecurityService
 
     def save(GrailsParameterMap params) {
         Contact contact = new Contact(params)
-        contact.user = authenticationService.getUser()
+        contact.user = springSecurityService.getCurrentUser()
         def response = AppUtil.saveResponse(false, contact)
         if (contact.validate()) {
             contact.save(flush: true)
@@ -25,7 +26,7 @@ class ContactService {
         params.max = params.max ?: GlobalConfig.itemsPerPage()
         List<Contact> contactList = Contact.createCriteria().list(params) {
             user {
-                idEq(authenticationService.getUser().id)
+                idEq(springSecurityService.getCurrentUser().id)
             }
             order("id", "desc")
         }
@@ -38,6 +39,7 @@ class ContactService {
 
     def update(Contact contact, GrailsParameterMap params) {
         contact.properties = params
+        contact.user = springSecurityService.getCurrentUser()
         def response = AppUtil.saveResponse(false, contact)
         if (contact.validate()) {
             contact.save(flush: true)

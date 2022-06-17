@@ -12,6 +12,16 @@
     <asset:stylesheet src="application.css"/>
 
     <g:layoutHead/>
+
+    <style>
+    .custom-logout-btn {
+        color: #007bff;
+        text-decoration: none;
+        background-color: transparent;
+        padding: 0px;
+        border: none;
+    }
+    </style>
 </head>
 
 <body>
@@ -33,7 +43,9 @@
             <ul class="list-group">
                 <UIHelper:leftNavigation/>
                 <li class="list-group-item">
-                    <g:link controller="authentication" action="logout">Logout</g:link>
+                    <g:form controller="logout">
+                        <g:submitButton class="custom-logout-btn" name="Submit" value="Logout" />
+                    </g:form>
                 </li>
             </ul>
         </nav>

@@ -1,8 +1,10 @@
 package com.krc.ocb
 
+import grails.plugin.springsecurity.annotation.Secured
+
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class ContactController {
 
-    AuthenticationService authenticationService
     ContactService contactService
 
     def index() {
@@ -39,7 +41,6 @@ class ContactController {
 
     def update() {
         def response = contactService.getById(params.id)
-        response.user = authenticationService.getUser()
         if (!response) {
             flash.message = AppUtil.infoMessage("Invalid Entity", false)
             redirect(controller: "contact", action: "index")
