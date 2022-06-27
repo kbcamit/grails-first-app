@@ -10,6 +10,7 @@ class UrlMappings {
         }
 
         "/"(controller: "contact", action: "index")
+        "/password-reset"(controller: "userAuthentication", action: "reset")
         "500"(view: '/error')
         "404"(view: '/notFound')
     }

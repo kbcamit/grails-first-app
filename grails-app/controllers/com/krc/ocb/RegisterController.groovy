@@ -30,4 +30,6 @@ class RegisterController {
             redirect(controller: 'register', action: 'index')
         }
     }
+
+    def forgotPassword() {}
 }

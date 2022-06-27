@@ -12,12 +12,11 @@
                     </g:if>
                     <div class="account-wall">
                         <g:img dir="images" file="grails.svg" class="profile-img"/>
-                        <g:form controller="login" action="authenticate" class="form-signin">
-                            <g:textField name="username" class="form-control" placeholder="Email" required="required" />
-                            <g:passwordField name="password" class="form-control" placeholder="Password" required="required" />
-                            <g:submitButton class="btn btn-lg btn-primary btn-block" name="login" value="Login"/>
-                            <g:link controller="register" action="index" class="btn btn-lg btn-primary btn-block">User Registration</g:link>
-                            <g:link controller="register" action="forgotPassword" class="btn btn-lg btn-primary btn-block">Forgot Password?</g:link>
+                        <g:form controller="userAuthentication" action="submit" class="form-signin">
+                            <g:textField name="email" class="form-control" placeholder="Email" required="required"/>
+                            <g:submitButton class="btn btn-lg btn-primary btn-block" name="submit" value="Submit"/>
+                            <g:link controller="login" action="auth"
+                                    class="btn btn-lg btn-primary btn-block">Login</g:link>
                         </g:form>
                     </div>
                 </div>

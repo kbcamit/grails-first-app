@@ -1,9 +1,9 @@
 package com.krc.ocb
 
-import grails.testing.web.controllers.ControllerUnitTest
+import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class AuthenticationControllerSpec extends Specification implements ControllerUnitTest<AuthenticationController> {
+class UserAuthenticationServiceSpec extends Specification implements ServiceUnitTest<UserAuthenticationService>{
 
     def setup() {
     }
